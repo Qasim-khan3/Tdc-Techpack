@@ -14,6 +14,7 @@
         - Professional PDF report (QWeb)
     """,
     'author': 'TDC',
+    'images': ['static/description/banner.png'],
     'depends': ['sale_management', 'mrp', 'stock', 'product'],
     'data': [
         'security/ir.model.access.csv',
