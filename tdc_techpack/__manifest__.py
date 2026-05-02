@@ -13,7 +13,7 @@
         - Costing & pricing section
         - Professional PDF report (QWeb)
     """,
-    'author': 'TDC',
+    'author': 'Techno Digi Codes',
     'images': ['static/description/banner.png'],
     'depends': ['sale_management', 'mrp', 'stock', 'product'],
     'data': [
