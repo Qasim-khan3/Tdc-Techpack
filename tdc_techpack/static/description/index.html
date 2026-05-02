@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        /* ── Reset & Base ─────────────────────────────────────────────── */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            color: #333;
+            background: #fff;
+            line-height: 1.6;
+        }
+
+        /* ── Variables ───────────────────────────────────────────────── */
+        :root {
+            --primary:   #714B67;
+            --secondary: #1A1A2E;
+            --accent:    #C0392B;
+            --green:     #27AE60;
+            --orange:    #E67E22;
+            --light:     #F8F4F8;
+            --border:    #E0D6E0;
+            --text:      #2C2C2C;
+            --muted:     #666;
+        }
+
+        /* ── Hero Banner ─────────────────────────────────────────────── */
+        .hero {
+            background: linear-gradient(135deg, #714B67 0%, #1A1A2E 100%);
+            color: white;
+            padding: 48px 40px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        .hero .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+        .hero h1 span { color: #E8D5E4; }
+        .hero p {
+            font-size: 16px;
+            color: rgba(255,255,255,0.82);
+            max-width: 560px;
+            margin: 0 auto 24px;
+        }
+        .hero-tags { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+        .hero-tags span {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        /* ── Layout ──────────────────────────────────────────────────── */
+        .wrap { max-width: 820px; margin: 0 auto; padding: 0 16px; }
+        .section { padding: 36px 0; border-bottom: 1px solid var(--border); }
+        .section:last-child { border-bottom: none; }
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid var(--primary);
+            display: inline-block;
+        }
+
+        /* ── Feature Grid ────────────────────────────────────────────── */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 8px;
+        }
+        .feature-card {
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 16px;
+            text-align: center;
+        }
+        .feature-card .icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .feature-card h3 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+        .feature-card p {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* ── What's Included ─────────────────────────────────────────── */
+        .check-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 24px;
+            margin-top: 8px;
+        }
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text);
+            padding: 4px 0;
+        }
+        .check-item::before {
+            content: "✓";
+            color: var(--green);
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* ── Workflow ────────────────────────────────────────────────── */
+        .workflow {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+        .workflow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .workflow-step .dot {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+            margin-bottom: 6px;
+        }
+        .dot-draft    { background: var(--muted); }
+        .dot-confirm  { background: var(--orange); }
+        .dot-approve  { background: var(--green); }
+        .dot-cancel   { background: var(--accent); }
+        .workflow-step span {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--muted);
+        }
+        .workflow-arrow {
+            font-size: 20px;
+            color: var(--border);
+            padding: 0 8px;
+            margin-bottom: 20px;
+        }
+
+        /* ── Spec Sheet Preview ──────────────────────────────────────── */
+        .spec-preview {
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .spec-header {
+            background: var(--secondary);
+            color: white;
+            padding: 10px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .spec-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-bottom: 1px solid var(--border);
+        }
+        .spec-cell {
+            padding: 8px 12px;
+            font-size: 12px;
+            border-right: 1px solid var(--border);
+        }
+        .spec-cell:last-child { border-right: none; }
+        .spec-cell strong { display: block; color: var(--muted); font-size: 10px; text-transform: uppercase; margin-bottom: 2px; }
+        .spec-body { display: grid; grid-template-columns: 1fr 1fr 1fr; min-height: 120px; }
+        .spec-body-col { padding: 12px; border-right: 1px solid var(--border); font-size: 11px; }
+        .spec-body-col:last-child { border-right: none; }
+        .spec-body-col .label { color: var(--accent); font-weight: 700; font-size: 10px; text-transform: uppercase; margin-bottom: 4px; }
+        .spec-body-col .val { color: var(--text); margin-bottom: 6px; }
+        .spec-section-title {
+            background: #f0f0f0;
+            text-align: center;
+            font-weight: 700;
+            font-size: 12px;
+            padding: 6px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* ── BOM Table ───────────────────────────────────────────────── */
+        .bom-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
+        .bom-table thead tr { background: var(--secondary); color: white; }
+        .bom-table th { padding: 8px 10px; text-align: left; font-weight: 600; }
+        .bom-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+        .bom-table tbody tr:nth-child(even) { background: var(--light); }
+        .type-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .type-zipper  { background: #E8EAF6; color: #3949AB; }
+        .type-snap    { background: #E8F5E9; color: #2E7D32; }
+        .type-label   { background: #FFF3E0; color: #E65100; }
+        .type-thread  { background: #F3E5F5; color: #7B1FA2; }
+
+        /* ── Info Cards ──────────────────────────────────────────────── */
+        .info-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+        .info-card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .info-card-header {
+            background: var(--primary);
+            color: white;
+            padding: 10px 14px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .info-card-body { padding: 14px; }
+        .info-card-body p { font-size: 12px; color: var(--text); margin-bottom: 6px; }
+        .info-card-body p:last-child { margin-bottom: 0; }
+
+        /* ── Dependencies ────────────────────────────────────────────── */
+        .dep-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .dep-pill {
+            background: #EDE4EB;
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 1px solid #C8A8C0;
+        }
+
+        /* ── Contact Footer ──────────────────────────────────────────── */
+        .contact-bar {
+            background: linear-gradient(135deg, #714B67, #1A1A2E);
+            color: white;
+            padding: 28px 32px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 36px;
+        }
+        .contact-bar h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+        .contact-bar p { font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 12px; }
+        .contact-details { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+        .contact-item { font-size: 13px; color: white; }
+        .contact-item strong { font-size: 15px; }
+
+        /* ── Responsive ──────────────────────────────────────────────── */
+        @media (max-width: 600px) {
+            .feature-grid { grid-template-columns: 1fr 1fr; }
+            .check-list   { grid-template-columns: 1fr; }
+            .info-cards   { grid-template-columns: 1fr; }
+            .spec-row     { grid-template-columns: 1fr 1fr; }
+            .spec-body    { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════════════════════ -->
+<div class="hero">
+    <div class="badge">Fashion Manufacturing · Odoo 18</div>
+    <h1>TDC <span>Techpack</span></h1>
+    <p>Professional Fashion Specification Sheets — linked to Sale Orders &amp; Manufacturing Orders, with full BOM, costing, images, and PDF export.</p>
+    <div class="hero-tags">
+        <span>✦ Odoo 18</span>
+        <span>✦ Sale Order Integration</span>
+        <span>✦ MRP Integration</span>
+        <span>✦ PDF Report</span>
+        <span>✦ Full BOM</span>
+        <span>✦ Approval Workflow</span>
+    </div>
+</div>
+
+<div class="wrap">
+
+<!-- ══════════════════════════════════════════════════════════════════
+     OVERVIEW
+══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+    <div class="section-title">What is TDC Techpack?</div>
+    <p style="font-size:14px; color:var(--text); margin-bottom:16px;">
+        A <strong>Tech Pack</strong> is the master specification document that fashion brands send to manufacturers before production.
+        It defines exactly how a garment must be made — fabric, fit, stitching, hardware, labels, and costing.
+        Without a clear Tech Pack, factories guess. Guessing leads to mistakes, delays, and wasted money.
+    </p>
+    <p style="font-size:14px; color:var(--text);">
+        <strong>TDC Techpack</strong> is a complete Odoo 18 module that lets your team create, approve, and print
+        professional specification sheets — all inside Odoo, connected directly to your Sales and Manufacturing workflows.
+    </p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     FEATURES
+══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+    <div class="section-title">Key Features</div>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="icon">📋</div>
+            <h3>Full Construction Spec</h3>
+            <p>Collar, pocket, closure, hem, elastic, fit type — every detail in one place.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🧵</div>
+            <h3>Stitching Specifications</h3>
+            <p>Stitch type, SPI, seam allowance, top stitching colour and detailed notes.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🔩</div>
+            <h3>Hardware BOM</h3>
+            <p>Full bill of materials — zippers, snaps, labels, threads, elastic, packaging.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🖼</div>
+            <h3>Technical Images</h3>
+            <p>Upload front view, back view, and two detail images directly on the form.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">💰</div>
+            <h3>Costing &amp; Margin</h3>
+            <p>Fabric, trim, labour, overhead costs — automatic total and margin % calculation.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🖨</div>
+            <h3>Professional PDF</h3>
+            <p>One-click A4 spec sheet export — branded layout matching industry standards.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🛒</div>
+            <h3>Sale Order Link</h3>
+            <p>Link tech packs to Sale Orders with smart button navigation.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">⚙️</div>
+            <h3>MRP Integration</h3>
+            <p>Link to Manufacturing Orders — production teams access specs instantly.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">✅</div>
+            <h3>Approval Workflow</h3>
+            <p>Draft → Confirm → Approve with full chatter audit trail and user tracking.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     WHAT'S INCLUDED
+══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+    <div class="section-title">What's Included</div>
+    <div class="check-list">
+        <div class="check-item">Auto-sequence: TDC/TP/YYYY/0001</div>
+        <div class="check-item">Brand, style number, season, description fields</div>
+        <div class="check-item">Fabric name, weight, composition fields</div>
+        <div class="check-item">Fit type selection (slim / regular / loose / oversized)</div>
+        <div class="check-item">Construction details: collar, pocket, closure, hem, elastic</div>
+        <div class="check-item">Stitching: type, SPI, seam allowance, top stitch colour</div>
+        <div class="check-item">Stitching notes (highlighted in PDF)</div>
+        <div class="check-item">BOM lines with type, colour, size, logo/engraving, placement</div>
+        <div class="check-item">Front view image upload</div>
+        <div class="check-item">Back view image upload</div>
+        <div class="check-item">2 × detail images</div>
+        <div class="check-item">HTML construction notes field</div>
+        <div class="check-item">Label position and content fields</div>
+        <div class="check-item">Care instructions field</div>
+        <div class="check-item">Fabric cost, trim cost, labour cost, overhead cost</div>
+        <div class="check-item">Auto-computed total cost</div>
+        <div class="check-item">Target retail price and auto-computed margin %</div>
+        <div class="check-item">Many2many link to Sale Orders</div>
+        <div class="check-item">Many2many link to Manufacturing Orders</div>
+        <div class="check-item">Smart buttons on Sale Order form</div>
+        <div class="check-item">Smart buttons on MRP Production form</div>
+        <div class="check-item">Confirmed-by and approved-by user tracking</div>
+        <div class="check-item">Professional A4 QWeb PDF report</div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SPEC SHEET PREVIEW
+══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+    <div class="section-title">PDF Spec Sheet Preview</div>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">
+        The printed PDF matches professional fashion industry spec sheet standards.
+        Below is a representation of the report layout:
+    </p>
+    <div class="spec-preview">
+        <div class="spec-header">TDC TECHPACK — FASHION SPECIFICATION SHEET</div>
+        <div class="spec-row">
+            <div class="spec-cell"><strong>Brand</strong>XANDER</div>
+            <div class="spec-cell"><strong>Style No.</strong>MENS_JACKET1</div>
+            <div class="spec-cell"><strong>Fabric</strong>Blended Polyester</div>
+            <div class="spec-cell"><strong>Date</strong>01/01/2025</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-cell"><strong>Season</strong>Fashion S/22</div>
+            <div class="spec-cell"><strong>Description</strong>Jacket</div>
+            <div class="spec-cell" style="grid-column: span 2;"><strong>Size</strong>XS / S / M / L / XL</div>
+        </div>
+        <div class="spec-section-title">CONSTRUCTION</div>
+        <div class="spec-body">
+            <div class="spec-body-col">
+                <div style="background:#eee; height:90px; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:11px;">FRONT VIEW</div>
+            </div>
+            <div class="spec-body-col">
+                <div class="label">Fabric &amp; Fit</div>
+                <div class="val">Blended Polyester · 280 GSM</div>
+                <div class="val">Slim Fit</div>
+                <div class="label" style="margin-top:8px;">Construction</div>
+                <div class="val">Collar with Top Stitching</div>
+                <div class="val">Classic Flap Pocket</div>
+                <div class="val">Metal Zipper — engraved logo</div>
+                <div class="label" style="margin-top:8px;">Stitching</div>
+                <div class="val">Single Needle + Overlock · 12 SPI</div>
+            </div>
+            <div class="spec-body-col">
+                <div style="background:#eee; height:90px; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:11px;">BACK VIEW</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top:12px;">
+        <table class="bom-table">
+            <thead>
+                <tr>
+                    <th>#</th><th>Type</th><th>Description</th>
+                    <th>Colour / Finish</th><th>Size / Spec</th>
+                    <th>Logo</th><th>Placement</th><th style="text-align:right;">Qty</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><span class="type-badge type-zipper">Zipper</span></td>
+                    <td><strong>Metal Zipper</strong></td>
+                    <td>Silver / Chrome</td><td>#5 — 60cm</td>
+                    <td>Engraved XANDER</td><td>Front centre</td>
+                    <td style="text-align:right;">1 Pcs</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><span class="type-badge type-snap">Snap</span></td>
+                    <td><strong>Snap Fastener</strong></td>
+                    <td>Silver / Chrome</td><td>15mm</td>
+                    <td>Engraved XANDER</td><td>Pocket flap</td>
+                    <td style="text-align:right;">2 Pairs</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><span class="type-badge type-label">Label</span></td>
+                    <td><strong>Woven Brand Label</strong></td>
+                    <td>Black / White</td><td>Standard</td>
+                    <td>Brand name + size</td><td>Back neck</td>
+                    <td style="text-align:right;">1 Pcs</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><span class="type-badge type-thread">Thread</span></td>
+                    <td><strong>Sewing Thread</strong></td>
+                    <td>Matching Grey</td><td>120/2</td>
+                    <td>—</td><td>All seams</td>
+                    <td style="text-align:right;">1 Cone</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     WORKFLOW
+══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+    <div class="section-title">Approval Workflow</div>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:16px;">
+        Every Tech Pack passes through a controlled approval process before it reaches the factory.
+        Each step records the user and timestamp in the chatter.
+    </p>
+    <div class="workflow">
+        <div class="workflow-step">
+            <div class="dot dot-draft">D</div>
+            <span>Draft</span>
+        </div>
+        <div class="workflow-arrow">→</div>
+        <div class="workflow-step">
+            <div class="dot dot-confirm">C</div>
+            <span>Confirmed</span>
+        </div>
+        <div class="workflow-arrow">→</div>
+        <div class="workflow-step">
+            <div class="dot dot-approve">✓</div>
+            <span>Approved</span>
+        </div>
+        <div class="workflow-arrow" style="color:#ddd;">|</div>
+        <div class="workflow-step">
+            <div class="dot dot-cancel">✕</div>
+            <span>Cancelled</span>
+        </div>
+    </div>
+    <div class="info-cards" style="margin-top:16px;">
+        <div class="info-card">
+            <div class="info-card-header">Draft → Confirmed</div>
+            <div class="info-card-body">
+                <p>Click <strong>Confirm</strong> once all details are complete.</p>
+                <p>Requires at least one BOM line — the system validates this automatically.</p>
+                <p>Records the confirming user's name and timestamp.</p>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="info-card-header">Confirmed → Approved</div>
+            <div class="info-card-body">
+                <p>A manager clicks <strong>Approve</strong> after reviewing the specification.</p>
+                <p>Records the approving user's name and approval date.</p>
+                <p>PDF report shows full approval details in the footer.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SALE & MRP INTEGRATION
+══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+    <div class="section-title">Sale &amp; Manufacturing Integration</div>
+    <div class="info-cards">
+        <div class="info-card">
+            <div class="info-card-header">🛒 Sale Order Integration</div>
+            <div class="info-card-body">
+                <p>A <strong>Tech Pack smart button</strong> appears on every Sale Order form.</p>
+                <p>Sales staff can view or create linked Tech Packs without leaving the Sale Order.</p>
+                <p>Link multiple Sale Orders to one Tech Pack, or one Sale Order to multiple Tech Packs.</p>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="info-card-header">⚙️ Manufacturing Order Integration</div>
+            <div class="info-card-body">
+                <p>A <strong>Tech Pack smart button</strong> appears on every MRP Production form.</p>
+                <p>Production teams access the exact specification they need without searching.</p>
+                <p>Reduces errors caused by outdated or missing spec documents on the factory floor.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     DEPENDENCIES
+══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+    <div class="section-title">Dependencies</div>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">
+        The following standard Odoo modules must be installed before TDC Techpack:
+    </p>
+    <div class="dep-list">
+        <span class="dep-pill">sale_management</span>
+        <span class="dep-pill">mrp</span>
+        <span class="dep-pill">stock</span>
+        <span class="dep-pill">product</span>
+        <span class="dep-pill">mail (auto)</span>
+    </div>
+    <p style="font-size:12px; color:var(--muted); margin-top:12px;">
+        All dependencies are standard Odoo 18 modules included in every installation.
+        No third-party packages required.
+    </p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     CONTACT
+══════════════════════════════════════════════════════════════════ -->
+<div class="contact-bar">
+    <h3>Developed by Techno Digi Codes</h3>
+    <p>Custom Odoo modules for Fashion, Manufacturing &amp; Retail</p>
+    <div class="contact-details">
+        <div class="contact-item">📞 <strong>03328240980</strong></div>
+        <div class="contact-item">🌐 <strong>technodigicodes.com</strong></div>
+        <div class="contact-item">💬 WhatsApp support available</div>
+    </div>
+</div>
+
+</div><!-- end .wrap -->
+</body>
+</html>
