@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_techpack" model="ir.actions.report">
+        <field name="name">Tech Pack Specification Sheet</field>
+        <field name="model">tdc.techpack</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tdc_techpack.report_techpack_template</field>
+        <field name="report_file">tdc_techpack.report_techpack_template</field>
+        <field name="print_report_name">f'TechPack - {object.brand} - {object.style_no}'</field>
+        <field name="binding_model_id" ref="model_tdc_techpack"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="base.paperformat_euro"/>
+    </record>
+
+</odoo>

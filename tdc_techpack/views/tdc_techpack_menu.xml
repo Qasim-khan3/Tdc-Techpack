@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Top-level menu -->
+    <menuitem id="menu_tdc_techpack_root"
+              name="Tech Pack"
+              sequence="50"
+              web_icon="tdc_techpack,static/description/icon.png"/>
+
+    <!-- Main section -->
+    <menuitem id="menu_tdc_techpack_main"
+              name="Tech Packs"
+              parent="menu_tdc_techpack_root"
+              sequence="10"/>
+
+    <menuitem id="menu_tdc_techpack_list"
+              name="All Tech Packs"
+              parent="menu_tdc_techpack_main"
+              action="action_tdc_techpack"
+              sequence="10"/>
+
+    <menuitem id="menu_tdc_techpack_draft"
+              name="Draft"
+              parent="menu_tdc_techpack_main"
+              action="action_tdc_techpack"
+              sequence="20"/>
+
+</odoo>

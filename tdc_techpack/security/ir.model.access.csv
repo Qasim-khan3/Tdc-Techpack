@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tdc_techpack_user,tdc.techpack user,model_tdc_techpack,base.group_user,1,1,1,0
+access_tdc_techpack_manager,tdc.techpack manager,model_tdc_techpack,base.group_system,1,1,1,1
+access_tdc_techpack_bom_line_user,tdc.techpack.bom.line user,model_tdc_techpack_bom_line,base.group_user,1,1,1,0
+access_tdc_techpack_bom_line_manager,tdc.techpack.bom.line manager,model_tdc_techpack_bom_line,base.group_system,1,1,1,1

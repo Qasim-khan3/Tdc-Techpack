@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_tdc_techpack_bom_line_list" model="ir.ui.view">
+        <field name="name">tdc.techpack.bom.line.list</field>
+        <field name="model">tdc.techpack.bom.line</field>
+        <field name="arch" type="xml">
+            <list string="BOM Lines" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="techpack_id"/>
+                <field name="item_type"/>
+                <field name="name"/>
+                <field name="color"/>
+                <field name="size_spec"/>
+                <field name="logo_engraving"/>
+                <field name="placement"/>
+                <field name="qty"/>
+                <field name="uom_id"/>
+                <field name="unit_cost"/>
+                <field name="subtotal" sum="Total"/>
+                <field name="note"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>
